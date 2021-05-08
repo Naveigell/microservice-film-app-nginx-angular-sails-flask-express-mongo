@@ -1,0 +1,45 @@
+version: "3.1"
+services:
+    gateway:
+        ports:
+            - 1000:1000
+        working_dir: /
+        expose:
+            - "1000"
+        build:
+            context: ./gateway
+        depends_on:
+            - films
+            - directors
+    frontend:
+        ports:
+            - 4200:80
+        working_dir: /
+        expose:
+            - "80"
+        build:
+            context: ./nginx
+        depends_on:
+            - gateway
+    films:
+        working_dir: /
+        build:
+            context: ./services/films
+        depends_on:
+            - mongo
+    directors:
+        working_dir: /
+        build:
+            context: ./services/directors
+        depends_on:
+            - mongo
+    mongo:
+        image: mongo:latest
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: password
+            MONGO_INITDB_DATABASE: root-db
+
+        volumes:
+            - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro

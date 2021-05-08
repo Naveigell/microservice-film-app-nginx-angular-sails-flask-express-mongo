@@ -1,0 +1,101 @@
+<!-- <router-outlet></router-outlet> -->
+<div class="body">
+    <div class="films">
+        <h1>Film lists</h1>
+        <h3 class="error" *ngIf="film.message.error">{{ film.message.error }}</h3>
+        <h3 class="success" *ngIf="film.message.message">{{ film.message.message }}</h3>
+        <button (click)="film.insert.open = !film.insert.open">{{ film.insert.open ? "Cancel" : "Add Film" }}</button>
+        <br>
+        <form method="post" *ngIf="film.insert.open">
+            <input class="input" type="text" name="film" id="film" [(ngModel)]="film.insert.data.title" placeholder="Film title"> <br>
+            <input class="input" type="text" name="description" id="description" [(ngModel)]="film.insert.data.description" placeholder="Film description"> <br>
+            <button style="margin-top: 3px;" (click)="saveFilm()">Save</button>
+        </form>
+        <table >
+            <thead>
+                <td>No</td>
+                <td>Title</td>
+                <td>Description</td>
+                <td>Action</td>
+            </thead>
+            <tbody>
+                <tr *ngFor="let film of films; index as i">
+                    <td> {{ i + 1 }} </td>
+                    <td>
+                        <span *ngIf="!film.onUpdateMode; else titleform;">{{ film.title }}</span>
+                        <ng-template #titleform style="width: 100%;">
+                            <input style="width: 90%; padding: 10px;" type="text" [(ngModel)]="film.title">
+                        </ng-template>
+                    </td>
+                    <td> 
+                        <span *ngIf="!film.onUpdateMode; else descriptionform;">{{ film.description }}</span>
+                        <ng-template #descriptionform style="width: 100%;">
+                            <input style="width: 90%; padding: 10px;" type="text" [(ngModel)]="film.description">
+                        </ng-template>
+                    </td>
+                    <td> 
+                        <button (click)="removeFilms(i)">Delete</button>
+                        <br>
+                        <br>
+                        <div>
+                            <button *ngIf="!film.onUpdateMode; else optionfilm;" (click)="film.onUpdateMode = true;">Update</button>
+                            <ng-template #optionfilm style="width: 100%;">
+                                <button (click)="updateFilm(film)">Save</button>
+                                <button (click)="film.onUpdateMode = false;">Cancel</button>
+                            </ng-template>
+                        </div>  
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="directors">
+        <h1>Director lists</h1>
+        <h3 class="error" *ngIf="director.message.error">{{ director.message.error }}</h3>
+        <h3 class="success" *ngIf="director.message.message">{{ director.message.message }}</h3>
+        <button (click)="director.insert.open = !director.insert.open">{{ director.insert.open ? "Cancel" : "Add Director" }}</button>
+        <br>
+        <form method="post" *ngIf="director.insert.open">
+            <input class="input" type="text" name="name" id="name" [(ngModel)]="director.insert.data.name" placeholder="Director name"> <br>
+            <input class="input" type="text" name="born" id="born" [(ngModel)]="director.insert.data.born" placeholder="Director born"> <br>
+            <button style="margin-top: 3px;" (click)="saveDirector()">Save</button>
+        </form>
+        <table >
+            <thead>
+                <td>No</td>
+                <td>Title</td>
+                <td>Description</td>
+                <td>Action</td>
+            </thead>
+            <tbody>
+                <tr *ngFor="let director of directors; index as i">
+                    <td> {{ i + 1 }} </td>
+                    <td>
+                        <span *ngIf="!director.onUpdateMode; else nameform;">{{ director.name }}</span>
+                        <ng-template #nameform style="width: 100%;">
+                            <input style="width: 90%; padding: 10px;" type="text" [(ngModel)]="director.name">
+                        </ng-template>
+                    </td>
+                    <td>
+                        <span *ngIf="!director.onUpdateMode; else bornform;">{{ director.born }}</span>
+                        <ng-template #bornform style="width: 100%;">
+                            <input style="width: 90%; padding: 10px;" type="text" [(ngModel)]="director.born">
+                        </ng-template>
+                    </td>
+                    <td> 
+                        <button (click)="removeDirector(i)">Delete</button>
+                        <br>
+                        <br>
+                        <div>
+                            <button *ngIf="!director.onUpdateMode; else optiondirector;" (click)="director.onUpdateMode = true;">Update</button>
+                            <ng-template #optiondirector style="width: 100%;">
+                                <button (click)="updateDirector(director)">Save</button>
+                                <button (click)="director.onUpdateMode = false;">Cancel</button>
+                            </ng-template>
+                        </div>  
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

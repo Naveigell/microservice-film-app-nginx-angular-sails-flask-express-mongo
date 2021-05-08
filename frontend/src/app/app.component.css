@@ -1,0 +1,29 @@
+table td, table td {
+	padding: 20px;
+	border: 1px solid;
+	margin: 0;
+}
+
+.body {
+	width: 80%;
+	margin: 0 auto;
+	padding: 100px;
+}
+
+.input {
+	padding: 10px;
+	width: 400px;
+	margin-top: 3px;
+}
+
+.button {
+	padding: 10px;
+}
+
+.error {
+	color: red;
+}
+
+.success {
+	color: green;
+}
